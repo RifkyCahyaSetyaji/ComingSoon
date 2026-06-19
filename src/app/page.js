@@ -1,65 +1,98 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import DoorScene from '@/components/DoorScene';
 
 export default function Home() {
+  const [phase, setPhase] = useState('start');
+  const worldControls = useAnimation();
+  const [isDoorOpen, setIsDoorOpen] = useState(false);
+
+  useEffect(() => {
+    const sequence = async () => {
+      // 1. Diam sebentar di awal lorong
+      await new Promise(r => setTimeout(r, 500));
+      
+      // 2. Berjalan menyusuri lorong (melewati pigura)
+      // Pintu ada di z = -3000. Kita maju ke z = 2200 (jadi dunia mundur 2200)
+      // Sehingga kita berada di z = -800 relatif terhadap pintu (pas di depan pintu).
+      setPhase('walking');
+      await worldControls.start({ 
+        z: 2200, 
+        transition: { duration: 4, ease: "easeInOut" } 
+      });
+      
+      // 3. Berhenti di depan pintu, lalu buka pintu
+      setPhase('at-door');
+      setIsDoorOpen(true);
+      await new Promise(r => setTimeout(r, 2500)); // Tunggu animasi pintu terbuka
+      
+      // 4. Maju menembus pintu menuju teks "COMING SOON"
+      // Teks ada di z = -1000 relatif terhadap pintu (berarti z = -4000 absolut)
+      // Kita memajukan dunia ke z = 3800 agar teks membesar tepat di depan kamera
+      setPhase('zooming');
+      await worldControls.start({ 
+        z: 3800, 
+        transition: { duration: 3, ease: "easeInOut" } 
+      });
+    };
+
+    sequence();
+  }, [worldControls]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="relative w-screen h-screen bg-[#050505] overflow-hidden" style={{ perspective: '800px' }}>
+      
+      {/* Wrapper Dunia 3D */}
+      <motion.div 
+        animate={worldControls}
+        initial={{ z: 0 }}
+        className="absolute inset-0 flex items-center justify-center origin-center preserve-3d"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        
+        {/* Karpet Merah */}
+        <div 
+          className="absolute w-[600px] h-[5000px] bg-[#8b0000] shadow-[0_0_50px_rgba(139,0,0,0.5)] border-x-4 border-[#d4af37]"
+          style={{ 
+            transform: 'translateY(400px) translateZ(-2000px) rotateX(90deg)',
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(0,0,0,0.2) 100px, rgba(0,0,0,0.2) 102px)'
+          }}
+        ></div>
+
+        {/* Lampu / Cahaya Lorong (opsional) */}
+        <div className="absolute w-[200px] h-[5000px] bg-gradient-to-t from-transparent via-[#d4af37] to-transparent opacity-10" style={{ transform: 'translateY(390px) translateZ(-2000px) rotateX(90deg)', filter: 'blur(50px)' }}></div>
+
+        {/* Pigura Kiri (Foto 1) */}
+        <div 
+          className="absolute w-[300px] h-[400px] md:w-[400px] md:h-[500px] border-[20px] border-[#d4af37] bg-[#1a1a1a] flex items-center justify-center shadow-[20px_20px_50px_rgba(0,0,0,0.9)]"
+          style={{ transform: 'translateX(-500px) translateY(-50px) translateZ(-800px) rotateY(15deg)' }}
+        >
+           <div className="text-white text-center p-4">
+             <span className="text-6xl block mb-4">📸</span>
+             <p className="text-[#d4af37] font-serif text-xl">Proker Pertama</p>
+           </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Pigura Kanan (Foto 2) */}
+        <div 
+          className="absolute w-[300px] h-[400px] md:w-[400px] md:h-[500px] border-[20px] border-[#d4af37] bg-[#1a1a1a] flex items-center justify-center shadow-[-20px_20px_50px_rgba(0,0,0,0.9)]"
+          style={{ transform: 'translateX(500px) translateY(-50px) translateZ(-1600px) rotateY(-15deg)' }}
+        >
+           <div className="text-white text-center p-4">
+             <span className="text-6xl block mb-4">📸</span>
+             <p className="text-[#d4af37] font-serif text-xl">Proker Kedua</p>
+           </div>
         </div>
-      </main>
-    </div>
+
+        {/* Pintu Utama di Ujung Lorong */}
+        <div className="absolute" style={{ transform: 'translateZ(-3000px)', transformStyle: 'preserve-3d' }}>
+           <DoorScene isOpen={isDoorOpen} />
+        </div>
+
+      </motion.div>
+
+    </main>
   );
 }
