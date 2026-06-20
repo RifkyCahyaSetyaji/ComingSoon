@@ -1,9 +1,17 @@
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 export default function SlicingPage() {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -179,8 +187,8 @@ export default function SlicingPage() {
             <div 
               className="relative" 
               style={{ 
-                width: 'min(100vw, 100vh * (820 / 958))',
-                height: 'min(100vw * (958 / 820), 100vh)',
+                width: isMobile ? 'calc(100vh * (820 / 958))' : 'min(100vw, 100vh * (820 / 958))',
+                height: isMobile ? '100vh' : 'min(100vw * (958 / 820), 100vh)',
                 transformStyle: 'preserve-3d' 
               }}
             >
