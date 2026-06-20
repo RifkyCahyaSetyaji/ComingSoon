@@ -66,10 +66,10 @@ export default function SlicingPage() {
           defaults: { ease: "power1.inOut" }
         });
 
-        // Camera Dolly-In (0s to 13s) to focus closely on the door
+        // Camera Dolly-In (0s to 13s)
         tl.to(".camera-container", {
-          z: 915,
-          y: 90,
+          z: 850,
+          y: 50,
           duration: 13,
           ease: "power2.inOut"
         }, 0);
@@ -150,22 +150,20 @@ export default function SlicingPage() {
           
           {/* ── Frame Kiri (Masuk dan Hilang) ── */}
           <div 
-            className="frame-left absolute z-40 bottom-[20%] md:bottom-[10%] left-[5%] md:left-[8%]" 
+            className="frame-left absolute z-40 bottom-[6%] lg:bottom-[10%] left-[2%] lg:left-[8%]" 
             style={{ opacity: 0 }}
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
-              <img src="/stage_scene.png" className="absolute object-cover w-[78%] h-[75%] top-[12%] rounded-[10px] filter grayscale brightness-80" alt="Photo 1" />
               <img src="/Frame1.svg" className="w-[110px] min-[400px]:w-[140px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kiri" />
             </div>
           </div>
 
           {/* ── Frame Kanan (Masuk dan Hilang) ── */}
           <div 
-            className="frame-right absolute z-40 bottom-[20%] md:bottom-[10%] right-[5%] md:right-[8%]" 
+            className="frame-right absolute z-40 bottom-[6%] lg:bottom-[10%] right-[2%] lg:right-[8%]" 
             style={{ opacity: 0 }}
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
-              <img src="/stage_scene.png" className="absolute object-cover w-[78%] h-[75%] top-[12%] rounded-[10px] filter grayscale brightness-80" alt="Photo 2" />
               <img src="/Frame2.svg" className="w-[110px] min-[400px]:w-[140px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kanan" />
             </div>
           </div>
@@ -177,10 +175,8 @@ export default function SlicingPage() {
           >
             {/* Strict Aspect Ratio Container to perfectly map to Pintu_karpet.svg (820x958) on any device */}
             <div 
-              className="relative" 
+              className="relative w-[100vw] h-[100vh] lg:w-[min(100vw,100vh*(820/958))] lg:h-[min(100vw*(958/820),100vh)]" 
               style={{ 
-                width: 'min(100vw, 100vh * (820 / 958))',
-                height: 'min(100vw * (958 / 820), 100vh)',
                 transformStyle: 'preserve-3d' 
               }}
             >
