@@ -140,7 +140,7 @@ export default function SlicingPage() {
       });
 
       // --- MOBILE ANIMATIONS (Width < 768px) ---
-      mm.add("(max-width: 767px)", () => {
+      mm.add("(max-width: 450px)", () => {
         const tl = gsap.timeline({
           defaults: { ease: "power1.inOut" }
         });
@@ -327,8 +327,8 @@ export default function SlicingPage() {
                 className="door-left-tab hidden md:block lg:hidden"
                 style={{
                   position: 'absolute',
-                  left: '39.4%', top: '27%',
-                  width: '15%', height: '39%',
+                  left: '41.5%', top: '41%',
+                  width: '14.1%', height: '18.1%',
                   transformOrigin: 'left center',
                   zIndex: 1,
                 }}
@@ -340,8 +340,8 @@ export default function SlicingPage() {
                 className="door-right-tab hidden md:block lg:hidden"
                 style={{
                   position: 'absolute',
-                  right: '36.1%', top: '27%',
-                  width: '15%', height: '39%',
+                  right: '40%', top: '41%',
+                  width: '14.1%', height: '18.1%',
                   transformOrigin: 'right center',
                   zIndex: 1,
                 }}
