@@ -60,8 +60,8 @@ export default function SlicingPage() {
         );
       });
 
-      // --- MOBILE ANIMATIONS (Width < 1024px) ---
-      mm.add("(max-width: 1024px)", () => {
+      // --- TABLET ANIMATIONS (768px <= Width < 1024px) ---
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
         const tl = gsap.timeline({
           defaults: { ease: "power1.inOut" }
         });
@@ -74,15 +74,94 @@ export default function SlicingPage() {
           ease: "power2.inOut"
         }, 0);
 
-        // Camera Horizontal Pans to center Left and Right frames sequentially
+        // Camera Horizontal Pans to center Left and Right frames sequentially for tablet width
         tl.to(".camera-container", {
-          x: 80,
+          x: 190,
           duration: 1.0,
           ease: "power2.out"
         }, 0.25);
 
         tl.to(".camera-container", {
-          x: -80,
+          x: -190,
+          duration: 1.0,
+          ease: "power2.inOut"
+        }, 2.1);
+
+        tl.to(".camera-container", {
+          x: 0,
+          duration: 1.0,
+          ease: "power2.inOut"
+        }, 5);
+
+        // Blur background gate container when frames are active
+        tl.fromTo(".center-gate",
+          { filter: "blur(0px)" },
+          { filter: "blur(6px)", duration: 1.0, ease: "power2.out" },
+          0.25
+        );
+        tl.to(".center-gate",
+          { filter: "blur(0px)", duration: 1.0, ease: "power2.inOut" },
+          5
+        );
+
+        // Frame Left Sequence
+        tl.fromTo(".frame-left",
+          { opacity: 0, x: -300 },
+          { opacity: 1, x: 0, duration: 1.0, ease: "power2.out" },
+          0.25
+        );
+        tl.to(".frame-left",
+          { opacity: 0, x: -300, duration: 1.0, ease: "power2.in" },
+          2
+        );
+
+        // Frame Right Sequence
+        tl.fromTo(".frame-right",
+          { opacity: 0, x: 300, z: -400 },
+          { opacity: 1, x: 0, z: -400, duration: 1.0, ease: "power2.out" },
+          2.5
+        );
+        tl.to(".frame-right",
+          { opacity: 0, x: 300, z: -400, duration: 1.0, ease: "power2.in" },
+          5
+        );
+
+        // Doors Rotation Open (8.25s to 13s)
+        tl.fromTo(".door-left-tab",
+          { rotationY: 0 },
+          { rotationY: 55, duration: 2.5, ease: "power2.inOut" },
+          7
+        );
+        tl.fromTo(".door-right-tab",
+          { rotationY: 0 },
+          { rotationY: -55, duration: 2.5, ease: "power2.inOut" },
+          7
+        );
+      });
+
+      // --- MOBILE ANIMATIONS (Width < 768px) ---
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          defaults: { ease: "power1.inOut" }
+        });
+
+        // Camera Dolly-In (0s to 13s)
+        tl.to(".camera-container", {
+          z: 1100,
+          y: 25,
+          duration: 13,
+          ease: "power2.inOut"
+        }, 0);
+
+        // Camera Horizontal Pans to center Left and Right frames sequentially for mobile width
+        tl.to(".camera-container", {
+          x: 65,
+          duration: 1.0,
+          ease: "power2.out"
+        }, 0.25);
+
+        tl.to(".camera-container", {
+          x: -65,
           duration: 1.0,
           ease: "power2.inOut"
         }, 2.1);
@@ -178,21 +257,21 @@ export default function SlicingPage() {
           
           {/* ── Frame Kiri (Masuk dan Hilang) ── */}
           <div 
-            className="frame-left absolute z-40 bottom-[12%] md:bottom-[10%] left-[2%] md:left-[8%]" 
+            className="frame-left absolute z-40 bottom-[12%] lg:bottom-[10%] left-[2%] md:left-[8%]" 
             style={{ opacity: 0 }}
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
-              <img src="/Frame1.svg" className="w-[240px] min-[400px]:w-[280px] md:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kiri" />
+              <img src="/Frame1.svg" className="w-[240px] min-[400px]:w-[280px] md:w-[260px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kiri" />
             </div>
           </div>
 
           {/* ── Frame Kanan (Masuk dan Hilang) ── */}
           <div 
-            className="frame-right absolute z-40 bottom-[12%] md:bottom-[10%] right-[2%] md:right-[8%]" 
+            className="frame-right absolute z-40 bottom-[12%] lg:bottom-[10%] right-[2%] md:right-[8%]" 
             style={{ opacity: 0 }}
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
-              <img src="/Frame2.svg" className="w-[240px] min-[400px]:w-[280px] md:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kanan" />
+              <img src="/Frame2.svg" className="w-[240px] min-[400px]:w-[280px] md:w-[260px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kanan" />
             </div>
           </div>
 
@@ -245,7 +324,7 @@ export default function SlicingPage() {
 
               {/* Tab Doors */}
               <div
-                className="door-left-tab hidden lg:block"
+                className="door-left-tab hidden md:block lg:hidden"
                 style={{
                   position: 'absolute',
                   left: '39.4%', top: '27%',
@@ -258,7 +337,7 @@ export default function SlicingPage() {
               </div>
 
               <div
-                className="door-right-tab hidden lg:block"
+                className="door-right-tab hidden md:block lg:hidden"
                 style={{
                   position: 'absolute',
                   right: '36.1%', top: '27%',
@@ -272,7 +351,7 @@ export default function SlicingPage() {
 
               {/* Mobile Doors */}
               <div
-                className="door-left-mobile block lg:hidden"
+                className="door-left-mobile block md:hidden"
                 style={{
                   position: 'absolute',
                   left: '37.5%', top: '40.7%',
@@ -285,7 +364,7 @@ export default function SlicingPage() {
               </div>
 
               <div
-                className="door-right-mobile block lg:hidden"
+                className="door-right-mobile block md:hidden"
                 style={{
                   position: 'absolute',
                   right: '36%', top: '40.7%',
