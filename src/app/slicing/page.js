@@ -40,18 +40,14 @@ export default function SlicingPage() {
   const doorRotateLeftDesktop = useTransform(time, [0, 2.5, 10], [0, 0, 45]);
   const doorRotateRightDesktop = useTransform(time, [0, 2.5, 10], [0, 0, -45]);
 
-  // MOBILE TRANSFORMS (Sequential Entry, No Exit)
-  // Frame 1 enters and stays
-  const frameLeftOpacityMobile = useTransform(time, [0, 0.24, 0.25, 15], [0, 0, 1, 1]);
-  const frameLeftXMobile = useTransform(time, [0.25, 1.25], [-300, 0], { ease: easeOutCubic });
+  // MOBILE TRANSFORMS (Sequential Entry & Exit before door opens)
+  // Frame 1 enters and exits
+  const frameLeftOpacityMobile = useTransform(time, [0, 0.24, 0.25, 6.5, 7.5, 15], [0, 0, 1, 1, 0, 0]);
+  const frameLeftXMobile = useTransform(time, [0.25, 1.25, 6.5, 7.5], [-300, 0, 0, -300], { ease: easeOutCubic });
   
-  // Frame 2 enters and stays
-  const frameRightOpacityMobile = useTransform(time, [0, 0.24, 0.25, 15], [0, 0, 1, 1]);
-  const frameRightXMobile = useTransform(time, [0.25, 1.25], [300, 0], { ease: easeOutCubic });
-  
-  // Frame 2 holds fully visible for 2.25 seconds
-  // const frameRightOpacityMobile = useTransform(time, [0, 4.24, 4.25, 7.5, 8.25, 15], [0, 0, 1, 1, 0, 0]);
-  // const frameRightXMobile = useTransform(time, [4.25, 5.25, 7.5, 8.25], [300, 0, 0, 300], { ease: easeOutCubic });
+  // Frame 2 enters and exits
+  const frameRightOpacityMobile = useTransform(time, [0, 0.24, 0.25, 6.5, 7.5, 15], [0, 0, 1, 1, 0, 0]);
+  const frameRightXMobile = useTransform(time, [0.25, 1.25, 6.5, 7.5], [300, 0, 0, 300], { ease: easeOutCubic });
   
   const doorRotateLeftMobile = useTransform(time, [0, 8.25, 13], [0, 0, 45]);
   const doorRotateRightMobile = useTransform(time, [0, 8.25, 13], [0, 0, -45]);
@@ -109,7 +105,7 @@ export default function SlicingPage() {
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
               <img src="/stage_scene.png" className="absolute object-cover w-[78%] h-[75%] top-[12%] rounded-[10px] filter grayscale brightness-80" alt="Photo 1" />
-              <img src="/Frame1.svg" className="w-[160px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kiri" />
+              <img src="/Frame1.svg" className="w-[110px] min-[400px]:w-[140px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kiri" />
             </div>
           </motion.div>
 
@@ -120,7 +116,7 @@ export default function SlicingPage() {
           >
             <div className="relative drop-shadow-2xl flex justify-center items-center">
               <img src="/stage_scene.png" className="absolute object-cover w-[78%] h-[75%] top-[12%] rounded-[10px] filter grayscale brightness-80" alt="Photo 2" />
-              <img src="/Frame2.svg" className="w-[160px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kanan" />
+              <img src="/Frame2.svg" className="w-[110px] min-[400px]:w-[140px] sm:w-[200px] lg:w-[320px] h-auto object-contain relative z-10" alt="Frame Kanan" />
             </div>
           </motion.div>
 
