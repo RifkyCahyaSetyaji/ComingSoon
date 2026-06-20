@@ -85,13 +85,13 @@ export default function SlicingPage() {
           x: -80,
           duration: 1.0,
           ease: "power2.inOut"
-        }, 3.5);
+        }, 2.1);
 
         tl.to(".camera-container", {
           x: 0,
           duration: 1.0,
           ease: "power2.inOut"
-        }, 6.5);
+        }, 5);
 
         // Blur background gate container when frames are active
         tl.fromTo(".center-gate",
@@ -101,7 +101,7 @@ export default function SlicingPage() {
         );
         tl.to(".center-gate",
           { filter: "blur(0px)", duration: 1.0, ease: "power2.inOut" },
-          6.5
+          5.2
         );
 
         // Frame Left Sequence
@@ -112,30 +112,30 @@ export default function SlicingPage() {
         );
         tl.to(".frame-left",
           { opacity: 0, x: -300, duration: 1.0, ease: "power2.in" },
-          3.5
+          2
         );
 
         // Frame Right Sequence
         tl.fromTo(".frame-right",
-          { opacity: 0, x: 300 },
-          { opacity: 1, x: 0, duration: 1.0, ease: "power2.out" },
-          3.5
+          { opacity: 0, x: 300, z: -400 },
+          { opacity: 1, x: 0, z: -400, duration: 1.0, ease: "power2.out" },
+          2.5
         );
         tl.to(".frame-right",
-          { opacity: 0, x: 300, duration: 1.0, ease: "power2.in" },
-          6.5
+          { opacity: 0, x: 300, z: -400, duration: 1.0, ease: "power2.in" },
+          5
         );
 
         // Doors Rotation Open (8.25s to 13s)
         tl.fromTo(".door-left-mobile",
           { rotationY: 0 },
           { rotationY: 55, duration: 2.5, ease: "power2.inOut" },
-          7.25
+          7
         );
         tl.fromTo(".door-right-mobile",
           { rotationY: 0 },
           { rotationY: -55, duration: 2.5, ease: "power2.inOut" },
-          7.25
+          7
         );
       });
 
