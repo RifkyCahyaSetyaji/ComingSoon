@@ -61,7 +61,7 @@ export default function SlicingPage() {
       });
 
       // --- MOBILE ANIMATIONS (Width < 1024px) ---
-      mm.add("(max-width: 1023px)", () => {
+      mm.add("(max-width: 1024px)", () => {
         const tl = gsap.timeline({
           defaults: { ease: "power1.inOut" }
         });
@@ -101,7 +101,7 @@ export default function SlicingPage() {
         );
         tl.to(".center-gate",
           { filter: "blur(0px)", duration: 1.0, ease: "power2.inOut" },
-          5.2
+          5
         );
 
         // Frame Left Sequence
@@ -243,12 +243,39 @@ export default function SlicingPage() {
                 <img src="/Pintu(Kanan).svg" style={{ width: '90%', height: '80%', objectFit: 'fill' }} alt="Pintu Kanan" />
               </div>
 
+              {/* Tab Doors */}
+              <div
+                className="door-left-tab hidden lg:block"
+                style={{
+                  position: 'absolute',
+                  left: '39.4%', top: '27%',
+                  width: '15%', height: '39%',
+                  transformOrigin: 'left center',
+                  zIndex: 1,
+                }}
+              >
+                <img src="/Pintu(Kiri).svg" style={{ width: '90%', height: '80%', objectFit: 'fill' }} alt="Pintu Kiri" />
+              </div>
+
+              <div
+                className="door-right-tab hidden lg:block"
+                style={{
+                  position: 'absolute',
+                  right: '36.1%', top: '27%',
+                  width: '15%', height: '39%',
+                  transformOrigin: 'right center',
+                  zIndex: 1,
+                }}
+              >
+                <img src="/Pintu(Kanan).svg" style={{ width: '90%', height: '80%', objectFit: 'fill' }} alt="Pintu Kanan" />
+              </div>
+
               {/* Mobile Doors */}
               <div
                 className="door-left-mobile block lg:hidden"
                 style={{
                   position: 'absolute',
-                  left: '39.89%', top: '40.7%',
+                  left: '37.5%', top: '40.7%',
                   width: '14.1%', height: '18.1%',
                   transformOrigin: 'left center',
                   zIndex: 1,
@@ -261,7 +288,7 @@ export default function SlicingPage() {
                 className="door-right-mobile block lg:hidden"
                 style={{
                   position: 'absolute',
-                  right: '38.37%', top: '40.7%',
+                  right: '36%', top: '40.7%',
                   width: '14.1%', height: '18.1%',
                   transformOrigin: 'right center',
                   zIndex: 1,
